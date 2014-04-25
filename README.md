@@ -27,15 +27,25 @@ Or in your Gemfile with Bundler:
 Basic Usage
 -------------
 
-Retrieving a particular endpoint:
+Retrieve the JSON for a particular endpoint:
 
     require 'reddit/base'
 
     client = Reddit::Base::Client.new(user: USERNAME, password: PASSWORD)
     client.get('/r/AskReddit')
 
-The above will return a `Faraday::Response` instance with JSON data in the
-`body` attribute.
+Making a new self post:
+
+    require 'reddit/base'
+
+    client = Reddit::Base::Client.new(user: USERNAME, password: PASSWORD)
+    client.get('/r/AskReddit') # Need to make at least one GET request to retrieve a modhash.
+    client.post('/api/submit', kind: 'self', sr: SUBREDDIT, title: 'Hello,', text: 'World!')
+
+`Client#get` and `Client#post` accept a `simplify` option to flatten data and kind attributes
+for easier traversal:
+
+    client.get('/r/AskReddit', simplify: true)
 
 What it Does
 ------------
