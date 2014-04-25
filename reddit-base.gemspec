@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["dan@dobs.org"]
   spec.summary       = %q{A minimal reddit API client for Ruby.}
   spec.description   = %q{A minimal reddit API client for Ruby that
-    simplifies concerns such authentication, rate limiting and extracting
+    simplifies concerns such as authentication, rate limiting and extracting
     JSON.}
   spec.homepage      = ""
   spec.license       = "MIT"
