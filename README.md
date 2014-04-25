@@ -57,10 +57,23 @@ for easier traversal:
 client.get('/r/AskReddit', simplify: true)
 ```
 
+Several forms of authentication are supported:
+
+```ruby
+# Username and password.
+client = Reddit::Base::Client.new(user: USERNAME, password: PASSWORD)
+
+# Cookie.
+client = Reddit::Base::Client.new(cookie: COOKIE)
+
+# OAuth2 access token.
+client = Reddit::Base::Client.new(access_token: ACCESS_TOKEN)
+```
+
 What it Does
 ------------
 
-  * Authentication.
+  * Authentication (user/password, cookie, OAuth2 access token).
   * Rate limiting.
   * Modhash handling (reddit's CSRF protection).
   * JSON coersion.
@@ -71,6 +84,7 @@ What it Does
 What it Doesn't
 ---------------
 
+  * OAuth2 token negotiation.
   * Parsing of Reddit "Things" and "Kinds."
   * Parsing of common attributes like dates and times.
   * HTML entity decoding (beware of "body" and "selftext").
