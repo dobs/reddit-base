@@ -18,34 +18,44 @@ Installation
 
 Via Rubygems:
 
-    gem install reddit-base
+```
+gem install reddit-base
+```
 
 Or in your Gemfile with Bundler:
 
-    gem reddit-base
+```
+gem reddit-base
+```
 
 Basic Usage
 -------------
 
 Retrieve the JSON for a particular endpoint:
 
-    require 'reddit/base'
+```ruby
+require 'reddit/base'
 
-    client = Reddit::Base::Client.new(user: USERNAME, password: PASSWORD)
-    client.get('/r/AskReddit')
+client = Reddit::Base::Client.new(user: USERNAME, password: PASSWORD)
+client.get('/r/AskReddit')
+```
 
 Making a new self post:
 
-    require 'reddit/base'
+```ruby
+require 'reddit/base'
 
-    client = Reddit::Base::Client.new(user: USERNAME, password: PASSWORD)
-    client.get('/r/AskReddit') # Need to make at least one GET request to retrieve a modhash.
-    client.post('/api/submit', kind: 'self', sr: SUBREDDIT, title: 'Hello,', text: 'World!')
+client = Reddit::Base::Client.new(user: USERNAME, password: PASSWORD)
+client.get('/r/AskReddit') # Need to make at least one GET request to retrieve a modhash.
+client.post('/api/submit', kind: 'self', sr: SUBREDDIT, title: 'Hello,', text: 'World!')
+```
 
 `Client#get` and `Client#post` accept a `simplify` option to flatten data and kind attributes
 for easier traversal:
 
-    client.get('/r/AskReddit', simplify: true)
+```ruby
+client.get('/r/AskReddit', simplify: true)
+```
 
 What it Does
 ------------
