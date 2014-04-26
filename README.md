@@ -90,7 +90,7 @@ For example, uploading an image to a subreddit you moderate:
 
 ```ruby
 image_upload = Reddit::Base::UploadIO.new('/path/to/your/image.png', 'image/png')
-reddit.post('/api/upload_sr_img.json', r: SUBREDDIT, file: image_upload, header: 0, name: 'example'
+client.post('/api/upload_sr_img.json', r: SUBREDDIT, file: image_upload, header: 0, name: 'example'
 ```
 
 ### Helpers
@@ -101,6 +101,15 @@ for easier traversal:
 ```ruby
 client.get('/r/AskReddit', simplify: true)
 ```
+
+Frequently Asked Questions
+--------------------------
+
+### Why do some requests 403 the first time but succeed when repeated?
+
+The most common cause is that you're attempting to access something private and your modhash isn't
+set yet. Try making a request agianst a public endpoint (e.g. `client.get('/r/AskReddit')`) at the
+start of each session which should automatically set a new modhash for you.
 
 Recommended Reading
 -------------------
