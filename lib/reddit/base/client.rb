@@ -11,14 +11,16 @@ module Reddit
       end
 
       def get(*args, **options)
+        simplify = options.delete(:simplify)
         body = connection.get(*args, **options).body
-        body = Reddit::Base::Helpers.simplify body if options[:simplify]
+        body = Reddit::Base::Helpers.simplify body if simplify
         body
       end
 
       def post(*args, **options)
+        simplify = options.delete(:simplify)
         body = connection.post(*args, **options).body
-        body = Reddit::Base::Helpers.simplify body if options[:simplify]
+        body = Reddit::Base::Helpers.simplify body if simplify
         body
       end
     end
