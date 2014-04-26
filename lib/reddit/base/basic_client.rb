@@ -8,8 +8,11 @@ module Reddit
     class BasicClient
       extend Forwardable
 
+      DEFAULT_URL        = 'http://www.reddit.com'.freeze
+      DEFAULT_URL_SECURE = 'https://ssl.reddit.com'.freeze
+
       DEFAULT_OPTIONS = {
-        url: 'http://www.reddit.com',
+        url: DEFAULT_URL,
         headers: {'User-Agent' => "reddit-base, a reddit client for ruby by /u/dobs (v#{VERSION})"}
       }.freeze
 
@@ -18,7 +21,10 @@ module Reddit
       def_delegators :connection, :get, :post, :params, :headers
 
       def initialize(options)
+        @secure = options.delete(:secure)
+
         @options = DEFAULT_OPTIONS.merge(options)
+        @options[:url] = DEFAULT_URL_SECURE if @secure
         @connection = Faraday.new(url: @options[:url], headers: @options[:headers]) do |builder|
           builder.request :multipart
           builder.request  :url_encoded
