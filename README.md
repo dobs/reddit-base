@@ -107,9 +107,9 @@ Frequently Asked Questions
 
 ### Why do some requests 403 the first time but succeed when repeated?
 
-The most common cause is that you're attempting to access something private and your modhash isn't
-set yet. Try making a request agianst a public endpoint (e.g. `client.get('/r/AskReddit')`) at the
-start of each session which should automatically set a new modhash for you.
+The most common cause is that you're attempting to access something private and your modhash hasn't
+been set yet. Try making a request against a public endpoint (e.g. `client.get('/r/AskReddit')`) at
+the start of each session which should automatically set a new modhash for you.
 
 Recommended Reading
 -------------------
