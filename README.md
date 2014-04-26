@@ -28,8 +28,27 @@ Or in your Gemfile with Bundler:
 gem reddit-base
 ```
 
-Basic Usage
--------------
+What it Does
+------------
+
+  * Authentication (user/password, cookie, OAuth2 access token).
+  * Rate limiting.
+  * Modhash handling (reddit's CSRF protection).
+  * JSON coersion.
+  * Forwarding..
+  * Multipart POST.
+  * Reddit error wrapping.
+
+What it Doesn't
+---------------
+
+  * OAuth2 token negotiation.
+  * Parsing of Reddit "Things" and "Kinds."
+  * Parsing of common attributes like dates and times.
+  * HTML entity decoding (beware of "body" and "selftext").
+
+Usage
+-----
 
 Retrieve the JSON for a particular endpoint:
 
@@ -50,14 +69,9 @@ client.get('/r/AskReddit') # Need to make at least one GET request to retrieve a
 client.post('/api/submit', kind: 'self', sr: SUBREDDIT, title: 'Hello,', text: 'World!')
 ```
 
-`Client#get` and `Client#post` accept a `simplify` option to flatten data and kind attributes
-for easier traversal:
+### Authentication
 
-```ruby
-client.get('/r/AskReddit', simplify: true)
-```
-
-Several forms of authentication are supported:
+Examples:
 
 ```ruby
 # Username and password.
@@ -70,24 +84,23 @@ client = Reddit::Base::Client.new(cookie: COOKIE)
 client = Reddit::Base::Client.new(access_token: ACCESS_TOKEN)
 ```
 
-What it Does
-------------
+### File Uploads
 
-  * Authentication (user/password, cookie, OAuth2 access token).
-  * Rate limiting.
-  * Modhash handling (reddit's CSRF protection).
-  * JSON coersion.
-  * Forwarding..
-  * Multipart POST.
-  * Reddit error wrapping.
+For example, uploading an image to a subreddit you moderate:
 
-What it Doesn't
----------------
+```ruby
+image_upload = Reddit::Base::UploadIO.new('/path/to/your/image.png', 'image/png')
+reddit.post('/api/upload_sr_img.json', r: SUBREDDIT, file: image_upload, header: 0, name: 'example'
+```
 
-  * OAuth2 token negotiation.
-  * Parsing of Reddit "Things" and "Kinds."
-  * Parsing of common attributes like dates and times.
-  * HTML entity decoding (beware of "body" and "selftext").
+### Helpers
+
+`Client#get` and `Client#post` accept a `simplify` option to flatten data and kind attributes
+for easier traversal:
+
+```ruby
+client.get('/r/AskReddit', simplify: true)
+```
 
 Recommended Reading
 -------------------

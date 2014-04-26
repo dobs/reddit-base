@@ -12,8 +12,9 @@ module Reddit
       DEFAULT_URL_SECURE = 'https://ssl.reddit.com'.freeze
 
       DEFAULT_OPTIONS = {
-        url: DEFAULT_URL,
-        headers: {'User-Agent' => "reddit-base, a reddit client for ruby by /u/dobs (v#{VERSION})"}
+        headers: {'User-Agent' => "reddit-base, a reddit client for ruby by /u/dobs (v#{VERSION})"},
+        rem: true,
+        url: DEFAULT_URL
       }.freeze
 
       attr_reader :connection, :options
