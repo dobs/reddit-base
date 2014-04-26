@@ -3,6 +3,8 @@ Reddit Base
 
 A minimal reddit API client for Ruby.
 
+[![Gem Version](https://badge.fury.io/rb/reddit-base.png)](http://badge.fury.io/rb/reddit-base)
+
 Motivation
 ----------
 
