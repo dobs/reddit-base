@@ -70,7 +70,6 @@ Making a new self post:
 require 'reddit/base'
 
 client = Reddit::Base::Client.new(user: USERNAME, password: PASSWORD)
-client.get('/r/AskReddit') # Need to make at least one GET request to retrieve a modhash.
 client.post('/api/submit', kind: 'self', sr: SUBREDDIT, title: 'Hello,', text: 'World!')
 ```
 
@@ -118,15 +117,6 @@ so you can take it a step further and just do:
 ```ruby
 client.get('/r/AskReddit').children
 ```
-
-Frequently Asked Questions
---------------------------
-
-### Why do some requests 403 the first time but succeed when repeated?
-
-The most common cause is that you're attempting to access something private
-and your modhash hasn't been set yet. Try making a request against a public
-endpoint (e.g. `client.get('/r/AskReddit')`) at the start of each session.
 
 Recommended Reading
 -------------------
