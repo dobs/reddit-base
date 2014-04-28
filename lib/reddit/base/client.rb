@@ -1,3 +1,5 @@
+require 'hashie'
+
 module Reddit
   module Base
     # Client that does everything BasicClient does but also attempts to
@@ -11,17 +13,13 @@ module Reddit
       end
 
       def get(*args, **options)
-        simplify = options.delete(:simplify)
         body = connection.get(*args, **options).body
-        body = Reddit::Base::Helpers.simplify body if simplify
-        body
+        Mash.new body
       end
 
       def post(*args, **options)
-        simplify = options.delete(:simplify)
         body = connection.post(*args, **options).body
-        body = Reddit::Base::Helpers.simplify body if simplify
-        body
+        Mash.new body
       end
     end
   end

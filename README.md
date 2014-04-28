@@ -95,13 +95,25 @@ image_upload = Reddit::Base::UploadIO.new('/path/to/your/image.png', 'image/png'
 client.post('/api/upload_sr_img.json', r: SUBREDDIT, file: image_upload, header: 0, name: 'example'
 ```
 
-### Helpers
+### Traversal
 
-`Client#get` and `Client#post` accept a `simplify` option to flatten data and kind attributes
-for easier traversal:
+`Client` returns a type of `Hashie::Mash` so instead of:
 
 ```ruby
-client.get('/r/AskReddit', simplify: true)
+client.get('/r/AskReddit')['data']['children']
+```
+
+You can do:
+
+```ruby
+client.get('/r/AskReddit').data.children
+```
+
+As a bonus it also forwards any missed methods along to its `data` attribute, so you can take it a step
+further and just do:
+
+```ruby
+client.get('/r/AskReddit').children
 ```
 
 Frequently Asked Questions
@@ -111,7 +123,7 @@ Frequently Asked Questions
 
 The most common cause is that you're attempting to access something private and your modhash hasn't
 been set yet. Try making a request against a public endpoint (e.g. `client.get('/r/AskReddit')`) at
-the start of each session which should automatically set a new modhash for you.
+the start of each session.
 
 Recommended Reading
 -------------------
