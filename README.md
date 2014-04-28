@@ -3,6 +3,9 @@ Reddit Base
 
 A minimal reddit API client for Ruby.
 
+**Disclaimer:** Assume I'm an untrustworthy fool until 1.0.0. I'll try to
+avoid it, but point releases may drop functionality up until that point.
+
 [![Gem Version](https://badge.fury.io/rb/reddit-base.png)](http://badge.fury.io/rb/reddit-base)
 
 Motivation
@@ -109,8 +112,8 @@ You can do:
 client.get('/r/AskReddit').data.children
 ```
 
-As a bonus it also forwards any missed methods along to its `data` attribute, so you can take it a step
-further and just do:
+As a bonus it also forwards any missed methods along to its `data` attribute,
+so you can take it a step further and just do:
 
 ```ruby
 client.get('/r/AskReddit').children
@@ -121,9 +124,9 @@ Frequently Asked Questions
 
 ### Why do some requests 403 the first time but succeed when repeated?
 
-The most common cause is that you're attempting to access something private and your modhash hasn't
-been set yet. Try making a request against a public endpoint (e.g. `client.get('/r/AskReddit')`) at
-the start of each session.
+The most common cause is that you're attempting to access something private
+and your modhash hasn't been set yet. Try making a request against a public
+endpoint (e.g. `client.get('/r/AskReddit')`) at the start of each session.
 
 Recommended Reading
 -------------------
