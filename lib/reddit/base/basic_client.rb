@@ -14,27 +14,38 @@ module Reddit
       DEFAULT_OPTIONS = {
         headers: {'User-Agent' => "reddit-base, a reddit client for ruby by /u/dobs (v#{VERSION})"},
         rem: true,
-        url: DEFAULT_URL
+        retries: 3,
+        secure: false
       }.freeze
 
       attr_reader :connection, :options
 
       def_delegators :connection, :get, :post, :params, :headers
 
-      def initialize(options)
-        @secure = options.delete(:secure)
-
+      def build_connection(options)
         @options = DEFAULT_OPTIONS.merge(options)
-        @options[:url] = DEFAULT_URL_SECURE if @secure
-        @connection = Faraday.new(url: @options[:url], headers: @options[:headers]) do |builder|
-          builder.request :multipart
+
+        @headers = @options.delete(:headers)
+        @retries = @options.delete(:retries)
+        @secure  = @options.delete(:secure)
+
+        @url = @options[:url] || (@secure ? DEFAULT_URL_SECURE : DEFAULT_URL)
+
+        @connection = Faraday.new(url: @url, headers: @headers) do |builder|
+          builder.request  :multipart
           builder.request  :url_encoded
           builder.request  :reddit_authentication, @options
+          builder.request  :retry, max: @retries, interval: 2, exceptions: FaradayMiddleware::Reddit::RETRIABLE_ERRORS
           builder.response :follow_redirects
-          builder.use  :reddit_rate_limit
-          builder.use  :reddit_modhash
+          builder.response :reddit_raise_error
+          builder.use      :reddit_rate_limit
+          builder.use      :reddit_modhash
           builder.adapter  Faraday.default_adapter
         end
+      end
+
+      def initialize(options)
+        build_connection(options)
       end
     end
   end
