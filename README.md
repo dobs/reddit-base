@@ -40,9 +40,10 @@ What it Does
   * Rate limiting.
   * Modhash handling (reddit's CSRF protection).
   * JSON coersion.
-  * Forwarding..
+  * Forwarding.
   * Multipart POST.
   * Reddit error wrapping.
+  * Retries for common errors (e.g. Gateway Timeout).
 
 What it Doesn't
 ---------------
