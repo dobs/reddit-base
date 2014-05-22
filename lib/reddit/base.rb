@@ -1,4 +1,5 @@
 require 'faraday'
+require 'faraday-manual-cache'
 require 'faraday_middleware'
 require 'faraday_middleware/reddit'
 require 'json'
