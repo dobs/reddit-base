@@ -9,18 +9,32 @@ module Reddit
         super(options)
 
         connection.builder.insert_before FaradayMiddleware::FollowRedirects, FaradayMiddleware::ParseJson
-        connection.builder.insert_before FaradayMiddleware::Reddit::RateLimit, FaradayMiddleware::Reddit::ForceJson
+        connection.builder.insert_before FaradayMiddleware::Reddit::Modhash, Faraday::ManualCache, expires_in: 30, logger: Logger.new(STDOUT)
+        connection.builder.insert_before Faraday::ManualCache, FaradayMiddleware::Reddit::ForceJson
       end
 
-      def get(*args, **options)
-        body = connection.get(*args, **options).body
-        Mash.new body
+      def get(url, **options)
+        response = connection.get(url, **options)
+        Mash.new response.body
       end
 
-      def post(*args, **options)
-        body = connection.post(*args, **options).body
-        Mash.new body
+      # Like #get, but bypasses 30 second cache.
+      def get!(url, **options)
+        response = connection.get do |req|
+          req.url url
+          req.headers['x-faraday-manual-cache'] = 'BYPASS'
+          req.body = options
+        end
+
+        Mash.new response.body
       end
+
+      def post(url, **options)
+        response = connection.post(url, **options)
+        Mash.new response.body
+      end
+
+      alias_method :post!, :post
     end
   end
 end

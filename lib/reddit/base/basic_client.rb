@@ -38,9 +38,8 @@ module Reddit
           builder.request  :retry, max: @retries, interval: 2, exceptions: FaradayMiddleware::Reddit::RETRIABLE_ERRORS
           builder.response :follow_redirects
           builder.response :reddit_raise_error
-          builder.use      :reddit_rate_limit
           builder.use      :reddit_modhash
-          builder.use      :manual_cache, expires_in: 30
+          builder.use      :reddit_rate_limit
           builder.adapter  Faraday.default_adapter
         end
       end
