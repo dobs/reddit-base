@@ -9,7 +9,7 @@ module Reddit
         super(options)
 
         connection.builder.insert_before FaradayMiddleware::FollowRedirects, FaradayMiddleware::ParseJson
-        connection.builder.insert_before FaradayMiddleware::Reddit::Modhash, Faraday::ManualCache, expires_in: 30, logger: Logger.new(STDOUT)
+        connection.builder.insert_before FaradayMiddleware::Reddit::Modhash, Faraday::ManualCache, expires_in: 30
         connection.builder.insert_before Faraday::ManualCache, FaradayMiddleware::Reddit::ForceJson
       end
 
