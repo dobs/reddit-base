@@ -14,15 +14,11 @@ module Reddit
       end
 
       def get(url, **options)
-        response = connection.get(url, **options)
-        Mash.new response.body
-      end
+        nocache = options.delete(:nocache, false)
 
-      # Like #get, but bypasses 30 second cache.
-      def get!(url, **options)
         response = connection.get do |req|
           req.url url
-          req.headers['x-faraday-manual-cache'] = 'BYPASS'
+          req.headers['x-faraday-manual-cache'] = 'NOCACHE' if nocache
           req.body = options
         end
 
@@ -30,11 +26,11 @@ module Reddit
       end
 
       def post(url, **options)
+        nocache = options.delete(:nocache, false)
+
         response = connection.post(url, **options)
         Mash.new response.body
       end
-
-      alias_method :post!, :post
     end
   end
 end
