@@ -19,7 +19,7 @@ module Reddit
         response = connection.get do |req|
           req.url url
           req.headers['x-faraday-manual-cache'] = 'NOCACHE' if nocache
-          req.body = options
+          req.params = options
         end
 
         Mash.new response.body
