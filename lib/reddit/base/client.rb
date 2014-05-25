@@ -14,7 +14,7 @@ module Reddit
       end
 
       def get(url, **options)
-        nocache = options.delete(:nocache, false)
+        nocache = options.delete(:nocache)
 
         response = connection.get do |req|
           req.url url
@@ -26,7 +26,7 @@ module Reddit
       end
 
       def post(url, **options)
-        nocache = options.delete(:nocache, false)
+        nocache = options.delete(:nocache)
 
         response = connection.post(url, **options)
         Mash.new response.body
