@@ -7,7 +7,7 @@ module Reddit
         if self['data'] && self['data'].has_key?(method)
           self['data'].send(method, *args, &block)
         else
-          super(method, *args, &block)
+          super
         end
       end
 
