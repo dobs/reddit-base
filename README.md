@@ -119,6 +119,16 @@ so you can take it a step further and just do:
 client.get('/r/AskReddit').children
 ```
 
+### Caching
+
+Reddit recommends not request the same endpoint more than once every 30 seconds, and `Client` respects that.
+
+But this can be by passed by passing in a `nocache` parameter, useful if you're polling a frequently-updated endpoint, e.g.:
+
+```ruby
+client.get('/r/all/comments', nocache: true)
+```
+
 Recommended Reading
 -------------------
 
