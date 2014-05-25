@@ -44,6 +44,7 @@ What it Does
   * Multipart POST.
   * Reddit error wrapping.
   * Retries for common errors (e.g. Gateway Timeout).
+  * Request caching.
 
 What it Doesn't
 ---------------
