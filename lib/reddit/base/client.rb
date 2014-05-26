@@ -13,6 +13,13 @@ module Reddit
         connection.builder.insert_before Faraday::ManualCache, FaradayMiddleware::Reddit::ForceJson
       end
 
+      def delete(url, **options)
+        nocache = options.delete(:nocache)
+
+        response = connection.delete(url, **options)
+        Mash.new response.body
+      end
+
       def get(url, **options)
         nocache = options.delete(:nocache)
 
@@ -29,6 +36,13 @@ module Reddit
         nocache = options.delete(:nocache)
 
         response = connection.post(url, **options)
+        Mash.new response.body
+      end
+
+      def put(url, **options)
+        nocache = options.delete(:nocache)
+
+        response = connection.put(url, **options)
         Mash.new response.body
       end
     end

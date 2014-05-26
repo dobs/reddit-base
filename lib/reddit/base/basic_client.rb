@@ -20,7 +20,7 @@ module Reddit
 
       attr_reader :connection, :options
 
-      def_delegators :connection, :get, :post, :params, :headers
+      def_delegators :connection, :delete, :get, :headers, :params, :post, :put
 
       def build_connection(options)
         @options = DEFAULT_OPTIONS.merge(options)
