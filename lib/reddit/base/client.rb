@@ -17,7 +17,7 @@ module Reddit
         nocache = options.delete(:nocache)
 
         response = connection.delete(url, **options)
-        mash response
+        mashify response
       end
 
       def get(url, **options)
@@ -29,28 +29,34 @@ module Reddit
           req.params = options
         end
 
-        mash response
+        mashify response
       end
 
       def post(url, **options)
         nocache = options.delete(:nocache)
 
         response = connection.post(url, **options)
-        mash response
+        mashify response
       end
 
       def put(url, **options)
         nocache = options.delete(:nocache)
 
         response = connection.put(url, **options)
-        mash response
+        mashify response
       end
 
-      def mash(response)
+      def mashify(response)
         if response.body.is_a? Array
-          response.body.map { |x| Mash.new x }
+          response.body.map do |x|
+            output = Mash.new x
+            output.response = response
+            output
+          end
         else
-          Mash.new response.body
+          output = Mash.new response.body
+          output.response = response
+          output
         end
       end
     end
