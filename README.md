@@ -104,20 +104,13 @@ client.post('/api/upload_sr_img.json', r: SUBREDDIT, file: image_upload, header:
 `Client` returns a type of `Hashie::Mash` so instead of:
 
 ```ruby
-client.get('/r/AskReddit')['data']['children']
+client.get('/r/AskReddit').body['data']['children']
 ```
 
 You can do:
 
 ```ruby
-client.get('/r/AskReddit').data.children
-```
-
-As a bonus it also forwards any missed methods along to its `data` attribute,
-so you can take it a step further and just do:
-
-```ruby
-client.get('/r/AskReddit').children
+client.get('/r/AskReddit').body.data.children
 ```
 
 ### Caching
