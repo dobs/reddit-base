@@ -126,9 +126,13 @@ client.get('/r/all/comments', nocache: true)
 Recommended Reading
 -------------------
 
-  * reddit API documentation: http://www.reddit.com/dev/api
-  * reddit API wiki: https://github.com/reddit/reddit/wiki/API
-  * reddit project on Github: https://github.com/reddit/reddit
+  * Project Information
+    * Changes: [CHANGES.md](https://github.com/dobs/reddit-base/blob/master/CHANGES.md)
+  * reddit API
+    * API documentation: http://www.reddit.com/dev/api
+    * API wiki: https://github.com/reddit/reddit/wiki/API
+    * JSON wiki: https://github.com/reddit/reddit/wiki/JSON
+    * Project on Github: https://github.com/reddit/reddit
 
 Contributors
 ------------
