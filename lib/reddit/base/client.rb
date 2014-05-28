@@ -12,13 +12,13 @@ module Reddit
         connection.builder.insert_before Faraday::ManualCache, FaradayMiddleware::Reddit::ForceJson
       end
 
-      def delete(url, **options)
+      def delete(url, options = {})
         nocache = options.delete(:nocache)
 
-        connection.delete(url, **options)
+        connection.delete(url, options)
       end
 
-      def get(url, **options)
+      def get(url, options = {})
         nocache = options.delete(:nocache)
 
         connection.get do |req|
@@ -28,16 +28,16 @@ module Reddit
         end
       end
 
-      def post(url, **options)
+      def post(url, options = {})
         nocache = options.delete(:nocache)
 
-        connection.post(url, **options)
+        connection.post(url, options)
       end
 
-      def put(url, **options)
+      def put(url, options = {})
         nocache = options.delete(:nocache)
 
-        connection.put(url, **options)
+        connection.put(url, options)
       end
     end
   end
